@@ -286,17 +286,17 @@ export default function lab5() {
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           placeholder="Search by Firstname"
-          className="p-2 rounded-md border-2 border-gray-300 w-100 text-black"
+          className="p-2 rounded-md border-2 border-gray-300 w-100 text-black fixed"
         />
       </div>
       <button 
-        className="h-12 w-96 bg-gradient-to-t from-sky-500 to-indigo-500 rounded-xl cursor-pointer mt-4 hover:scale-105 transition-all"
+        className="h-12 w-96 bg-gradient-to-t from-sky-500 to-indigo-500 rounded-xl cursor-pointer mt-4 fixed"
         onClick={Click}>
         Toggle Layout
       </button>
       <div className={grid ? "grid grid-cols-4 gap-8 mt-8" : "flex flex-col mt-8"}>
         {filteredData.length === 0 ? (
-          <p className="text-black mt-4 text-xl">No matches found</p>
+          <p className="text-black mt-4 text-xl">No match</p>
         ) : (
           filteredData.map((element) => (
             <div
