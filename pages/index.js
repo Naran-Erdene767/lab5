@@ -268,6 +268,7 @@ export default function lab5() {
   const [filter, setFilter] = useState("");
   const [grid, setGrid] = useState(false);
   const router = useRouter();
+
   const Click = () => {
     setGrid(!grid);
   };
@@ -279,45 +280,45 @@ export default function lab5() {
   });
 
   return (
-    <div className="p-10 bg-gray-200 h-max">
-      <div className="mb-4">
+    <div className="p-10 bg-gradient-to-r from-purple-500 via-indigo-600 to-blue-500 h-screen">
+      <div className="mb-6 flex flex-col sm:flex-row justify-between items-center">
         <input
           type="text"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           placeholder="Search by Firstname"
-          className="p-2 rounded-md border-2 border-gray-300 w-100 text-black fixed"
+          className="p-4 rounded-lg w-full sm:w-96 bg-white text-black placeholder-gray-500 border-2 border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
+        <button 
+          className="mt-4 sm:mt-0 sm:ml-4 h-12 w-48 bg-gradient-to-r from-cyan-500 to-sky-500 rounded-xl text-white font-semibold hover:bg-indigo-600 shadow-lg transition-all"
+          onClick={Click}>
+          Toggle Layout
+        </button>
       </div>
-      <button 
-        className="h-12 w-96 bg-gradient-to-t from-sky-500 to-indigo-500 rounded-xl cursor-pointer mt-4 fixed"
-        onClick={Click}>
-        Toggle Layout
-      </button>
-      <div className={grid ? "grid grid-cols-4 gap-8 mt-8" : "flex flex-col mt-8"}>
+      <div className={grid ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8" : "flex flex-col mt-8"}>
         {filteredData.length === 0 ? (
-          <p className="text-black mt-4 text-xl">No match</p>
+          <p className="text-white text-xl mt-4">No match</p>
         ) : (
           filteredData.map((element) => (
             <div
               key={element.id}
-              className="w-full sm:w-96 h-auto flex flex-col p-5 rounded-lg text-black shadow-lg border-4 border-indigo-400 mt-8 hover:bg-gradient-to-r from-indigo-300 to-purple-300 hover:scale-105 transition-all"
+              className="w-full sm:w-80 h-auto flex flex-col p-5 rounded-lg bg-white text-black shadow-lg border-4 border-indigo-400 hover:bg-gradient-to-r from-indigo-300 to-purple-300 hover:scale-105 transition-all duration-300 ease-in-out"
             >
               <img
                 src={element.image}
                 alt={`${element.firstn} ${element.lastn}`}
                 className="object-cover rounded-full w-32 h-32 mx-auto mb-4 shadow-md"
               />
-              <div className="text-black ml-2">
-                <p className="text-lg font-semibold">{element.firstn} {element.lastn}</p>
+              <div className="text-black text-center">
+                <p className="text-xl font-semibold">{element.firstn} {element.lastn}</p>
+                <p className="text-green-500 text-md">{element.school} - {element.job}</p>
               </div>
-              <p className="text-green-500 text-md ml-2">{element.school} - {element.job}</p>
               {element.status && (
-                <div className="mt-2 ml-2">
+                <div className="mt-2">
                   <p className="text-blue-400 font-bold">Status:</p>
                   <ul className="text-black">
                     {element.status.map((item) => (
-                      <p key={item.id} className="text-sm">{item.name}</p>
+                      <li key={item.id} className="text-sm">{item.name}</li>
                     ))}
                   </ul>
                 </div>
