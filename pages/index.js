@@ -41,7 +41,7 @@ export default function Home() {
         height={250}
         alt="Picture of the author"
       />
-      <div className="text-2xl text-white mt-12">11c Class G.Naran-Erdene</div>
+      <div className="text-2xl text-black mt-12 text-bold">11c Class G.Naran-Erdene</div>
       <div className="flex flex-row mt-12">
         <button onClick={Go5} className="w-40 h-12 cursor-pointer bg-blue-500 text-white font-semibold rounded-lg shadow-lg transform transition-all hover:bg-blue-600 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400">
           Ug hevleh
