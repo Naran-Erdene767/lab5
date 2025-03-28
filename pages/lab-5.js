@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+
 const exampleData = [
   {
     id: 1,
@@ -264,69 +265,112 @@ const exampleData = [
   },
 ];
 
-export default function lab5() {
+
+export default function Lab5() {
+  const [isColumn, setIsColumn] = useState(false);
   const [filter, setFilter] = useState("");
   const [grid, setGrid] = useState(false);
   const router = useRouter();
+
   const Click = () => {
     setGrid(!grid);
   };
+  const Back = () => {
+    router.push("/");
+  };
 
   const filteredData = exampleData.filter((element) => {
-    return filter.toLocaleLowerCase() === "" 
-      ? element 
+    return filter.toLocaleLowerCase() === ""
+      ? element
       : element.firstn.toLocaleLowerCase().includes(filter.toLocaleLowerCase());
   });
 
   return (
-    <div className="p-10 bg-gray-200 h-max">
-      <div className="mb-4">
+    <div className="p-10 bg-gradient-to-r from-purple-500 via-indigo-600 to-blue-500 h-max">
+      <button
+        onClick={Back}
+        className="h-16 w-36 cursor-pointer bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition-all mb-6"
+      >
+        Go Back
+      </button>
+      <div className="mb-6 flex flex-col sm:flex-row justify-between items-center">
         <input
           type="text"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           placeholder="Search by Firstname"
-          className="p-2 rounded-md border-2 border-gray-300 w-100 text-black"
+          className="p-4 rounded-lg w-full sm:w-96 bg-white text-black placeholder-gray-500 border-2 border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
+        <button
+          className="mt-4 sm:mt-0 sm:ml-4 h-12 w-48 bg-gradient-to-r from-cyan-500 to-sky-500 rounded-xl text-white font-semibold hover:bg-indigo-600 shadow-lg transition-all"
+          onClick={Click}
+        >
+          Toggle Layout
+        </button>
       </div>
-      <button 
-        className="h-12 w-96 bg-gradient-to-t from-sky-500 to-indigo-500 rounded-xl cursor-pointer mt-4 hover:scale-105 transition-all"
-        onClick={Click}>
-        Toggle Layout
-      </button>
-      <div className={grid ? "grid grid-cols-4 gap-8 mt-8" : "flex flex-col mt-8"}>
+      <div
+        className={
+          grid
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8"
+            : "flex flex-col mt-8"
+        }
+      >
         {filteredData.length === 0 ? (
-          <p className="text-black mt-4 text-xl">No matches found</p>
+          <p className="text-white text-xl mt-4">No match</p>
         ) : (
           filteredData.map((element) => (
             <div
               key={element.id}
-              className="w-full sm:w-96 h-auto flex flex-col p-5 rounded-lg text-black shadow-lg border-4 border-indigo-400 mt-8 hover:bg-gradient-to-r from-indigo-300 to-purple-300 hover:scale-105 transition-all"
+              className={`${
+                grid
+                  ? "w-full mt-4"
+                  : "w-full sm:w-[400px] md:w-[800px] mt-8 flex justify-center items-start object-cover "
+              } h-auto flex flex-col p-5 rounded-lg bg-white text-black shadow-lg border-4 border-indigo-400 hover:bg-gradient-to-r from-indigo-300 to-purple-300 hover:scale-105 transition-all`}
             >
-              <img
-                src={element.image}
-                alt={`${element.firstn} ${element.lastn}`}
-                className="object-cover rounded-full w-32 h-32 mx-auto mb-4 shadow-md"
-              />
-              <div className="text-black ml-2">
-                <p className="text-lg font-semibold">{element.firstn} {element.lastn}</p>
-              </div>
-              <p className="text-green-500 text-md ml-2">{element.school} - {element.job}</p>
-              {element.status && (
-                <div className="mt-2 ml-2">
-                  <p className="text-blue-400 font-bold">Status:</p>
-                  <ul className="text-black">
-                    {element.status.map((item) => (
-                      <p key={item.id} className="text-sm">{item.name}</p>
-                    ))}
-                  </ul>
+              <div
+                className={`${
+                  grid ? "flex-col" : "sm:flex-row"
+                } flex items-center justify-start w-full mb-4`}
+              >
+                <img
+                  src={element.image}
+                  alt={`${element.firstn} ${element.lastn}`}
+                  className="object-cover rounded-full w-32 h-32 mx-auto sm:mx-0 sm:mr-6 mb-4 sm:mb-0"
+                />
+                <div className="flex flex-col">
+                <div className="text-black text-center sm:text-left mt-4 flex flex-col">
+                  <p className="text-xl font-semibold">
+                    {element.firstn} {element.lastn}
+                  </p>
+                  <p className="text-green-500 text-md">
+                    {element.school} - {element.job}
+                  </p>
                 </div>
-              )}
+              </div>
+              <div className="mt-4">
+                <p className={`${
+                        grid ? "text-sm text-center text-bold text-blue-500" : "text-bold text-blue-500 text-sm text-center sm:text-left ml-24"
+                      }`}>
+                  Status:
+                </p>
+                <ul className="text-black">
+                  {element.status.map((item) => (
+                    <li
+                      key={item.id}
+                      className={`${
+                        grid ? "text-sm text-center ml-0" : "text-sm text-center sm:text-left ml-24"
+                      }`}
+                    >
+                      {item.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              </div>
             </div>
           ))
         )}
       </div>
     </div>
-  );
+);
 }
-
